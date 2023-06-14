@@ -1,10 +1,14 @@
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
-romf datetime import datetime
+from datetime import datetime
 
 app = Flask(__name__)
+#with app.app_context():
+#app.app_context().push()
+#app.config['SECRET_KEY'] = '12345678'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 db = SQLAlchemy(app)
+
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
