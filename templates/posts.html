@@ -7,13 +7,22 @@ All articles in site
 {% block body %}
 <div class="container mt-5">
 <h1>All articles</h1>
+
+    {% if articles|length > 0 %}
+
     {% for el in articles %}
     <div class="alert alert-info">
         <h2>{{el.title}}</h2>
         <p>{{el.intro}}</p>
         <p><b>Date {{el.date.date()}}</b></p>
         <a href="/posts/{{el.id}}" class="btn btn-warning">Detail</a>
+        <a href="/posts/{{el.id}}/delete" class="btn btn-danger">Delete post</a>
+        <a href="/posts/{{el.id}}/update" class="btn btn-success">Change post</a>
     </div>
     {% endfor%}
+
+    {% else  %}
+    <p>У нас еще нет статей на сайте</p>
+    {% endif %}
 </div>
 {% endblock %}

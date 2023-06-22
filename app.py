@@ -66,6 +66,36 @@ def create_article():
 def user(name, id):
     return "User page "+name+" - "+str(id)
 
+@app.route('/posts/<int:id>/delete')
+def delete_post(id):
+    article = Article.query.get_or_404(id)
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return render_template('posts.html', articles=article)
+    except:
+        return "You have error when request send"
+
+
+@app.route('/posts/<int:id>/update', methods = ['POST', 'GET'])
+def update_article(id):
+    article = Article.query.get(id)
+    if request.method == "POST":
+        article.title = request.form["title"]
+        article.intro = request.form["intro"]
+        article.text = request.form["text"]
+
+        try:
+            db.session.commit()
+            return redirect('/posts')
+        except Exception as e:
+
+            return str(e)
+            #return "when add article create error"
+    else:
+
+        return render_template("update-article.html", article=article)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
